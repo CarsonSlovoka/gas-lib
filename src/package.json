@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "node ../out/test.mjs "
+    "test": "node ../out/test.mjs",
+    "buildAndTest": "tsc & node ../out/test.mjs"
   },
   "author": "Carson",
   "license": "MIT",
