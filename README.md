@@ -1,22 +1,13 @@
-## gas-lib
+# gas-lib
 
 gas相關腳本, 目前集中於寫spreadsheet的函數
 
-## Install CLASP(Command Line Apps Script Projects)
+## Demo & Usage
 
-您可以選擇使用[CLASP](https://github.com/google/clasp)來使遠端gs檔案與本機端同步
+以下連結提供已經實作的相關函數使用方法
 
-可以參考此教學
+> https://docs.google.com/spreadsheets/d/1v7oqH6myGrI6yLpDxC3e7kkveZyEuQr4G8TdZQGQE-8/
 
-Update npm:
-> npm install -g npm@9.1.2
+如果您想直接使用，可以直接複製該sheet，一樣也能在自己的sheet上使用那些函數
 
-> npm install -g @google/clasp
-
-
-```
-clasp login
-clasp logout
-```
-
-不過我不太喜歡他要求太多的權限，就沒繼續下去，不過clasp有出現在gas的手冊說明([guides/clasp](https://developers.google.com/apps-script/guides/clasp))，所以安全性應該沒什麼問題
+其中背景顏色有用`黃色`標示的儲存格表示公式，觀看那些儲存格即可。
