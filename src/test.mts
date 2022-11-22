@@ -2,6 +2,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import * as stat from './pkg/stat/stat.mjs'
+import * as json from './pkg/encoding/json/index.mjs'
 
 test("stat", async (t) => {
     await t.test('stat.js', async (t1) => {
@@ -23,6 +24,25 @@ test("stat", async (t) => {
                 [result[2], ["2022/11/23", 1]]
             ]) {
                 assert.strictEqual(actual.toString(), expected.toString())
+            }
+        })
+    })
+})
+
+test("encoding", async (t) => {
+    await t.test('json', async (t1) => {
+        await t1.test("TestCountRangeItems", () => {
+            const testData = [
+                ["Name", "desc"],
+                [1, 2]
+            ]
+            for (const [actual, expected] of [
+                [json.Array2Json(testData), `[["Name","desc"],[1,2]]`],
+                [json.Array2Json(testData, "data"), `{"data":[["Name","desc"],[1,2]]}`],
+                // [json.Array2Json(testData, "data", 2)]
+                // [json.Array2Json(testData, "data", "  ")]
+            ]) {
+                assert.strictEqual(actual, expected)
             }
         })
     })

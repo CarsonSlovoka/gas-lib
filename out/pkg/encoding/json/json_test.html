@@ -1,0 +1,15 @@
+<meta charset="utf-8"> <!-- ⛔ 這個很重要，最好寫上去，不是所有的server預設的編碼都是utf-8，沒有補上去這邊打的編碼有可能用其他的就會導致和期望的不符合 -->
+<script type="module">
+  import * as json from "./index.mjs"
+
+  (() => {
+    const testData = [
+      ["Name", "desc"],
+      [1, 2]
+    ]
+    console.log(json.Array2Json(testData))
+    console.log(json.Array2Json(testData, "data"))
+    console.log(json.Array2Json(testData, "data", 2)) // 間隔2格,會換行
+    console.log(json.Array2Json(testData, "data", "  ")) // 同上
+  })()
+</script>
