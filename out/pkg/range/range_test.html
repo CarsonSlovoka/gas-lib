@@ -1,0 +1,37 @@
+<meta charset="utf-8">
+<script type="module">
+  import * as range from "./range.mjs"
+
+  function ExampleRangeLookup() {
+    const testData = [
+      ["Table", "Member1", "Member2"],
+      ["A", "王一二", "李依"],
+      ["B", "Mary", "Jack"],
+      ["C", "Foo", "Bar"],
+    ]
+
+    // 找尋Mary所在的桌次
+    console.log(range.RangeLookup(testData, "Mary", "col", 0)) // B
+
+    console.log(range.RangeLookup(testData, "Mary", "col", 2)) // Jack
+
+
+    const testData2 = [
+      ["A", "B", "C"],
+      ["王一二", "Mary", "Foo"],
+      ["李依", "Jack", "Bar"],
+    ]
+    console.log(range.RangeLookup(testData2, "Mary", "row", 0)) // B
+    console.log(range.RangeLookup(testData2, "Mary", "row", 2)) // Jack
+  }
+
+  (() => {
+    const fragAll = document.createDocumentFragment()
+    for (const func of [ExampleRangeLookup]) {
+      document[func.name] = func
+      const frag = document.createRange().createContextualFragment(`<button onclick="document.${func.name}()">${func.name}</button>`)
+      fragAll.append(frag)
+    }
+    document.body.append(fragAll)
+  })()
+</script>

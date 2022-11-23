@@ -32,8 +32,6 @@
 
   (() => {
     const fragAll = document.createDocumentFragment()
-
-    // 這種寫法要手動更新麻煩
     for (const func of [ExampleCountColItems, ExampleCountColItemsByGroup]) {
       document[func.name] = func // 擴充document的屬性，把function塞給它，不然onclick沒有辦法直接指派
       const frag = document.createRange().createContextualFragment(`<button onclick="document.${func.name}()">${func.name}</button>`)

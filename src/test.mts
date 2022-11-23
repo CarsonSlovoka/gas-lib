@@ -3,6 +3,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import * as json from './pkg/encoding/json/index.mjs'
 import * as stat from './pkg/stat/stat.mjs'
+import * as range from './pkg/range/range.mjs'
 
 test("stat", async (t) => {
     await t.test('stat.js', async (t1) => {
@@ -113,6 +114,36 @@ test("encoding", async (t) => {
                 [json.Array2Json(testData, "data"), "{\"data\":[[\"Name\",\"desc\"],[1,2]]}"],
                 // [json.Array2Json(testData, "data", 2)]
                 // [json.Array2Json(testData, "data", "  ")]
+            ]) {
+                assert.strictEqual(actual, expected)
+            }
+        })
+    })
+})
+
+test("range", async (t) => {
+    await t.test('range.mjs', async (t1) => {
+        await t1.test("TestRangeLookup", () => {
+            const testData = [
+                ["Table", "Member1", "Member2"],
+                ["A", "王一二", "李依"],
+                ["B", "Mary", "Jack"],
+                ["C", "Foo", "Bar"],
+            ]
+
+            const testData2 = [
+                ["Table", "A", "B", "C"],
+                ["Member1", "王一二", "Mary", "Foo"],
+                ["Member2", "李依", "Jack", "Bar"],
+            ]
+            for (const [actual, expected] of [
+                // col
+                [range.RangeLookup(testData, "Mary", "col", 0), "B"],
+                [range.RangeLookup(testData, "Mary", "col", 2), "Jack"],
+
+                // row
+                [range.RangeLookup(testData2, "Mary", "row", 0), "B"],
+                [range.RangeLookup(testData2, "Mary", "row", 2), "Jack"],
             ]) {
                 assert.strictEqual(actual, expected)
             }
