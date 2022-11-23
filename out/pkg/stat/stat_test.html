@@ -2,7 +2,7 @@
 <script type="module">
   import * as stat from "./stat.mjs"
 
-  (() => {
+  function ExampleCountColItems() {
     const testData = [
       ["飲料", "甜點"],
       ["奶茶", "蛋糕"],
@@ -15,5 +15,30 @@
     console.log(stat.CountColItems(testData, "甜點", false))
     console.log(stat.CountColItems(testData, ["飲料", "甜點"]))
     console.log(stat.CountColItems(testData, ["飲料", "甜點"], false))
+  }
+
+  function ExampleCountColItemsByGroup() {
+    const testData = [
+      ["座位", "飲料", "甜點"],
+      ["A", "黑咖啡", "餅乾"],
+      ["A", "黑咖啡", "餅乾"],
+      ["B", "奶茶", "巧克力"],
+    ]
+    console.log(stat.CountColItemsByGroup(testData, "座位"))
+    console.log(stat.CountColItemsByGroup(testData, "座位", ["甜點"]))
+    console.log(stat.CountColItemsByGroup(testData, "座位", ["甜點"], true, ""))
+    console.log(stat.CountColItemsByGroup(testData, "座位", ["甜點"], false)) // json格式
+  }
+
+  (() => {
+    const fragAll = document.createDocumentFragment()
+
+    // 這種寫法要手動更新麻煩
+    for (const func of [ExampleCountColItems, ExampleCountColItemsByGroup]) {
+      document[func.name] = func // 擴充document的屬性，把function塞給它，不然onclick沒有辦法直接指派
+      const frag = document.createRange().createContextualFragment(`<button onclick="document.${func.name}()">${func.name}</button>`)
+      fragAll.append(frag)
+    }
+    document.body.append(fragAll)
   })()
 </script>
