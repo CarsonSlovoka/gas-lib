@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<script type="module">
+  import * as stat from "./stat.mjs"
+
+  (() => {
+    const testData = [
+      ["飲料", "甜點"],
+      ["奶茶", "蛋糕"],
+      ["紅茶", "冰淇淋"],
+      ["奶茶", "冰淇淋"],
+    ]
+
+    console.log(stat.CountColItems(testData))
+    console.log(stat.CountColItems(testData, "", false))
+    console.log(stat.CountColItems(testData, "甜點", false))
+    console.log(stat.CountColItems(testData, ["飲料", "甜點"]))
+    console.log(stat.CountColItems(testData, ["飲料", "甜點"], false))
+  })()
+</script>

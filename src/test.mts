@@ -26,6 +26,37 @@ test("stat", async (t) => {
                 assert.strictEqual(actual.toString(), expected.toString())
             }
         })
+
+        await t1.test("TestCountColItems", () => {
+            const testData = [
+                ["飲料", "甜點"],
+                ["奶茶", "蛋糕"],
+                ["紅茶", "冰淇淋"],
+                ["奶茶", "冰淇淋"],
+            ]
+            for (const [actual, expected] of [
+                [stat.CountColItems(testData), [
+                    ['飲料', '', '甜點', ''],
+                    ['奶茶', '紅茶', '蛋糕', '冰淇淋'],
+                    [2, 1, 1, 2]
+                ]],
+                [stat.CountColItems(testData, "飲料"), [
+                    ['甜點', ''],
+                    ['蛋糕', '冰淇淋'],
+                    [1, 2]
+                ]],
+                [stat.CountColItems(testData, ["飲料", "甜點"]), [
+                    [],
+                    [],
+                    []
+                ]],
+                [stat.CountColItems(testData, ["飲料", "甜點"], false), [
+                    "{}"
+                ]],
+            ]) {
+                assert.strictEqual(actual.toString(), expected.toString())
+            }
+        })
     })
 })
 
