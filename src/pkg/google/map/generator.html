@@ -1,0 +1,129 @@
+<head>
+  <title>Google: Maps Embed API教學</title>
+</head>
+<h1>Google: <a href="https://developers.google.com/maps/documentation/embed/embedding-map" target="_blank">Maps Embed API</a></h1>
+<ol>
+  <li><a href="https://console.cloud.google.com/" target="_blank">API KEY(Token)申請</a></li>
+</ol>
+<form>
+  <input type="text"
+         placeholder="Token. example: AIzaSyBu4nrcES5ez_PdscoSgf_OKDEaQ5UIFzk"
+         title="若沒有token，請先去申請. 此外本token已經廢棄，僅是範例"
+         style="width:50vw"
+         value=""
+  ><br>
+  <select id="mapMode" aria-label="">
+    <option value="" disabled selected hidden>請選擇地圖模式</option>
+    <option value="place">place</option>
+    <option value="view">view (不太方便只能用緯經度)</option>
+    <option value="directions">directions(類似路線規劃，可以選擇中繼站)</option>
+    <option value="streetview">street view</option>
+    <option value="search">search</option>
+  </select><br>
+  <select id="transport" aria-label="">
+    <option value="" disabled selected hidden>交通方式(僅Directions模式有用)</option>
+    <option value="driving">driving</option>
+    <option value="walking">walking</option>
+    <option value="bicycling">bicycling</option>
+    <option value="transit">transit</option>
+    <option value="flying">flying</option>
+  </select><br>
+  <input type="submit" value="產生範例">
+</form>
+
+<iframe
+  style="width:100vw;height:50vh;border:0"
+  loading="lazy"
+  allowfullscreen
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+
+<script>
+  const MapMode = {
+    Place: "place",
+    View: "view",
+    Directions: "directions",
+    StreetView: "streetview",
+    Search: "search",
+  }
+  const MapType = { // 這個UI會自帶按鈕，可以切換，所以屬於比較不重要的設定
+    Roadmap: "roadmap", // default
+    Satellite: "satellite", // 衛星地圖(比較符合現實所看到的場景)
+  }
+
+  const Transport = {
+    Driving: "driving",
+    Walking: "walking",
+    Bicycling: "bicycling",
+    Transit: "transit",
+    Flying: "flying",
+  }
+  const iframe = document.querySelector("iframe")
+  const form = document.querySelector("form")
+  form.onsubmit = (e) => {
+    e.preventDefault()
+    const apiKey = form.querySelector("input").value
+    const mapMode = document.querySelector("#mapMode").value
+    const transport = document.querySelector("#transport").value === "" ? "driving" : document.querySelector("#transport").value
+    iframe.src = `https://www.google.com/maps/embed/v1/${mapMode}?key=${apiKey}`
+    switch (mapMode) {
+      case MapMode.Place:
+        iframe.src +=
+          `&q=台北火車站` +
+          `&zoom=18` + // 0~21 (0為全球, 21個別建築物)
+          `&maptype=${MapType.Roadmap}` +
+          // `&region=US` +
+          ""
+        break
+      case MapMode.View:
+        iframe.src +=
+          `&center=37.4218,-122.0840` + // 緯經度座標
+          `&zoom=18` + // 0~21 (0為全球, 21個別建築物)
+          `&maptype=${MapType.Satellite}` +
+          `&language=zh-TW` + // zh-TW, en-US
+          // `&region=US` +
+          ""
+        break
+      case MapMode.Directions:
+        iframe.src +=
+          `&origin=23.9037,121.0794` + // 緯經度座標, 地址都可以
+          `&waypoints=台中車站|桃園車站` + // 如果有多個地點，請用 | 來分開
+          `&destination=台北火車站` +
+          `&mode=${transport}` +
+          // `&avoid=` + // tolls(通行費), ferries(渡輪), highways(高速公路), 如果有多個選擇可以用 | 隔開
+          `&units=metric` +  // metric(公里), imperial (英制，如英里) // 可以不設定，會依照查詢的國家所用的單位為準
+          // `&center=23.9038,121.0795` + // 檢視的中心點從什麼地方開始
+          `&zoom=10` + // 0~21 (0為全球, 21個別建築物)
+          `&maptype=${MapType.Satellite}` +
+          `&language=zh-TW` + // zh-TW, en-US
+          // `&region=US` +
+          ""
+        break
+      case MapMode.StreetView: // 街景模式 (不是很好用)
+        iframe.src +=
+          `&location=23.9037,121.0794` +  // 46.414382,10.013988 // 好像只能給緯經度
+          // `&pano=` + // 特定的全景ID，如果pano有找到就會使用它，找不到才會用location // 請ID請參考文件: https://developers.google.com/maps/documentation/places/web-service/place-id?hl=zh-tw
+
+          // 以下為選用參數
+          `&heading=60` + // -180~360度, 北方順時針方向的角度
+          `&pitch=-45` + // 相機的角度(向上或向下) -90~90, 預設值0度
+          `&fov=100` + // 視野10~100度, 預設值90度, 數值越大視野越大
+          // `&center=23.9037,121.0794` + // 檢視的中心點從什麼地方開始
+          `&language=zh-TW` + // zh-TW, en-US
+          // `&region=US` +
+          ""
+        break
+      case MapMode.Search:
+        iframe.src +=
+          `&q=台北車站` +
+          `&center=25.0409724901665, 121.51710007430927` + // 這個對Search就很有用，不然一開始出來的位置若差會很大
+          `&zoom=13` + // 0~21 (0為全球, 21個別建築物)
+          `&maptype=${MapType.Roadmap}` +
+          `&language=zh-TW` + // zh-TW, en-US
+          // `&region=US` +
+          ""
+    }
+    return false
+  }
+</script>
+
