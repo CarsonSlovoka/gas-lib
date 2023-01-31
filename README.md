@@ -13,3 +13,5 @@ gas相關腳本, 目前集中於寫spreadsheet的函數
 其中背景顏色有用`黃色`標示的儲存格表示公式，觀看那些儲存格即可。
 
 ## [分享腳本的方法](doc/share.md)
+
+## [Google Cloud](doc/googleCloud.md)
