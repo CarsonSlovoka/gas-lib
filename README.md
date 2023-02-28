@@ -15,3 +15,8 @@ gas相關腳本, 目前集中於寫spreadsheet的函數
 ## [分享腳本的方法](doc/share.md)
 
 ## [Google Cloud](doc/googleCloud.md)
+
+## TS小技巧
+
+- 善用`//@ts-ignore`: GAS中很多函數是來自於google所定義，這時候就可以用import的方式來載入該變數；另一種解法是將變數宣告成any，例如`const Utilities: any`
+- 使用console.error來進行測試: 因為某些函數用到了google所定義的函數，所以一定要在gas才能測試，可以把要測試的函數都寫在一個函數之中，再呼叫該函數即可，其中把非預期的項目用console.error，如果有執行到該內容，在console視窗即可發現錯誤，就能知道測試不過。
