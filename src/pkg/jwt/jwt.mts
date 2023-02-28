@@ -35,7 +35,7 @@ type DecodeResult = {
 
 class JWTHmacSha256 {
     constructor(protected privateKey: string) {
-        this.privateKey = privateKey
+        this.privateKey = privateKey // 可以透過此方法來產生隨機長度私鑰: https://go.dev/play/p/3rZfTdI2qDw
     }
 
     static EncodeWithKey(privateKey: string, payload: Record<Payload | string, number | string>, data: Record<string, number | string>): string {
@@ -161,12 +161,12 @@ class JWTHmacSha256 {
  * 產生JWT字串
  * locations on Google Maps.
  *
- * @example JWTHmacSha256Encode("abc123", `{"iss": "carson.google.com"}`, `{"sub": 12345}`)
- *  =>
+ * @example JWTHmacSha256Encode("qcZFSJBgU7WOALZF/z7LNxDHg/ifxkiU4Ip13xln+o8=", `{"iss": "carson.google.com"}`, `{"sub": 12345}`)
+ *  => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYXJzb24uZ29vZ2xlLmNvbSIsInN1YiI6MTIzNDV9.yFONgd4iPPA1QTb22odViMVs9Qgc_Zk7oRbA0H6zqIk"
  *
- * @param {String} privateKey
- * @param {String} payload 為json字串，可以包含iss, iat, exp, sub, aud, nbf, jti...
- * @param {String} data 請用json字串
+ * @param {"ywU3kmEmbedTz9INQOvrFNlmVow7pV+X6McK8EoHJmo="} privateKey 可以使用 https://go.dev/play/p/3rZfTdI2qDw 來幫您產生私鑰的內容
+ * @param {`{"iss": "carson.google.com", "iat":1677602266631, "exp": 2677602266631}`} payload 為json字串，可以包含iss, iat, exp, sub, aud, nbf, jti...
+ * @param {`{"sub": 12345}`} data 請用json字串
  * @return {String} JWT字串
  * @customFunction
  */
@@ -177,8 +177,8 @@ function JWTHmacSha256Encode(privateKey: string, payload: string, data: string):
 /**
  * 解出header, payload, 不對signature進行解析
  *
- * @example JWTDecode("")
- *  =>
+ * @example JWTDecode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYXJzb24uZ29vZ2xlLmNvbSIsInN1YiI6MTIzNDV9.yFONgd4iPPA1QTb22odViMVs9Qgc_Zk7oRbA0H6zqIk")
+ *  => `{"header":{"alg":"HS256","typ":"JWT"},"payload":{"iss":"carson.google.com","sub":12345},"signature":"yFONgd4iPPA1QTb22odViMVs9Qgc_Zk7oRbA0H6zqIk"}`
  *
  * @param {String} token
  * @param {Number} space 轉成json字串的每個空白間距
@@ -193,11 +193,11 @@ function JWTDecode(token: string, space=0): string {
  * 驗證JWT是否合法
  * locations on Google Maps.
  *
- * @example JWTHmacSha256Verify("myKey", `A23-21349aef`, `{"iss": "carson.com"}`)
+ * @example JWTHmacSha256Verify("qcZFSJBgU7WOALZF/z7LNxDHg/ifxkiU4Ip13xln+o8=", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYXJzb24uZ29vZ2xlLmNvbSIsInN1YiI6MTIzNDV9.yFONgd4iPPA1QTb22odViMVs9Qgc_Zk7oRbA0H6zqIk", "google.com")
  *  =>
  *
- * @param {String} privateKey
- * @param {String} token
+ * @param {"qcZFSJBgU7WOALZF/z7LNxDHg/ifxkiU4Ip13xln+o8="} privateKey
+ * @param {"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjYXJzb24uZ29vZ2xlLmNvbSIsInN1YiI6MTIzNDV9.yFONgd4iPPA1QTb22odViMVs9Qgc_Zk7oRbA0H6zqIk"} token
  * @param {?String} iss Issuer
  * @return {boolean}
  * @customFunction
