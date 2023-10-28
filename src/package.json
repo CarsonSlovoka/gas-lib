@@ -7,6 +7,8 @@
   "scripts": {
     "build": "tsc",
     "test": "node ../out/test.mjs",
+    "debug-test": "node --inspect-brk ../out/test.mjs",
+    "debug-test8888": "node --inspect-brk=127.0.0.1:8888 ../out/test.mjs",
     "buildAndTest": "tsc & node ../out/test.mjs"
   },
   "author": "Carson",
