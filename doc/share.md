@@ -52,6 +52,10 @@ function SummaryItems(arr, expand = false) {
 >
 > 在這種情況你把儲存格清空在重新打上公式，或者拿其他的儲存格來試，都會發現又不能用了。
 
+> 這邊的script必須是**原代碼的script**，就是看的到完整實作的那個gas script
+>
+> (而非你開一個新的spreadsheet然後建立script接著引入原代碼的script的那個script)
+
 ```
 Deploy -> New deployment
 
@@ -85,9 +89,25 @@ Select type:
 
 所以對他人而言，他們就能直接在儲存格用上您的公式，不用再牽扯apps script.
 
+> 補充:
+>
+> 當您複製了別人的spreadsheet，它會複製spreadsheet以及相關的app script
+>
+> 這些全部都是clone，也就是會再生成副本到該複製人自己的硬碟空間中
+>
+> (該app script名稱也和原本該擁有者所定義的app script名稱相同)
+>
+> 如果你複製多次，在自己的app script就會有相同的名稱，但是它旁邊其實會標記這是來自於哪一個spreadsheet
+>
+> 總之，產生副本之後，spreadsheet和app script都是在clone一份，不管您怎麼改都不會異動到原始的檔案！
+>
+> 其實每一個app script都會有一個id，可以在[專案設定](https://script.google.com/u/0/home/projects/1b4cJ_IHldsoOynCgGM74Xpkb4csak5_uVjGleEUb37DMzk6YoucwJa_B/settings)之中看到。
+>
+> 因此可以利用該id就能知道目前(id也會在網址之中)到底是編輯到哪一個app script
+
 ----
 
-如果您分享給所有人，開放他們有權利編輯，即便他們沒有腳本的權限，還是可以在該腳本使用那些函數，即
+如果您分享給所有人，開放他們有權利編輯(spreadsheet)，即便他們沒有腳本的權限，還是可以在該腳本使用那些函數，即
 
 > `擁有者`具備此權限，就能使用該函數。
 
