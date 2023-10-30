@@ -63,6 +63,21 @@
   >
   > 其中@customfunction要加上去，不然看不到JsDoc
 
+
+> 注意！自定義函數不能使用{`Range.merge`, `setValue`, ...}也就是不能改儲存格的內容，而數值能調整的，也只有當前的儲存格開始，不能指定，且也只能設定內容，不能設定公式
+>
+> 如果你想解放以上的內容，可以[有幾種辦法](https://stackoverflow.com/a/56861752/9935654)
+>
+> - [custom menu](https://developers.google.com/apps-script/guides/menus): `onOpen`
+> - button: 寫好你的script，建立按鈕之後在上面打上你的函數名稱即可
+> - [dialog or sidebar](https://developers.google.com/apps-script/guides/dialogs)
+> - simple or installable [trigger](https://developers.google.com/apps-script/guides/triggers): `onOpen`, `onInstall`, `onEdit`, ...
+
+相關連結:
+- [Google第三方應用程式服務管理](https://myaccount.google.com/connections?filters=3,4)
+- [scope調整](https://developers.google.com/apps-script/concepts/scopes)/[manifests](https://developers.google.com/apps-script/concepts/manifests): 選擇GAS的腳本，進入之後選擇設定，將appsscript.json`打勾，之後可以調整scopes
+
+
 ### 注意事項
 
 - 名稱不可以和內建函數重複

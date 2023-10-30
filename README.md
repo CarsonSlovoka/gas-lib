@@ -16,6 +16,8 @@ gas相關腳本, 目前集中於寫spreadsheet的函數
 
 ## [Google Cloud](doc/googleCloud.md)
 
+## [spreadsheet](doc/sheets/README.md)
+
 ## TS小技巧
 
 - 善用`//@ts-ignore`: GAS中很多函數是來自於google所定義，這時候就可以用import的方式來載入該變數；另一種解法是將變數宣告成any，例如`const Utilities: any`
